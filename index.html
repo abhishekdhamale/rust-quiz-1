@@ -3,102 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rust Programming Quiz 1</title>
+    <title>Rust Programming Quiz</title>
     <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f4f4f4;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
         }
 
         .container {
-            background: white;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 800px;
-            text-align: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 900px;
+            height: 600px;
         }
 
-        #timer {
-            font-size: 20px;
+        /* Left side for Question and Timer */
+        .left-panel {
+            flex: 1;
+            text-align: left;
+            padding-right: 20px;
+        }
+
+        .left-panel h2 {
+            font-size: 30px;
             margin-bottom: 20px;
+            color: #333;
         }
 
         .question {
-            font-size: 18px;
+            font-size: 24px;
             margin-bottom: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #questionNumber {
+            font-size: 18px;
+            margin-top: 10px;
+            color: #333;
         }
 
         pre {
-            background-color: #f1f1f1;
+            background-color: #f4f4f4;
             padding: 15px;
             border-radius: 5px;
-            white-space: pre-wrap; /* This ensures the code respects newlines */
-            word-wrap: break-word;
-            overflow: auto;
-        }
-
-        .code-snippet {
-            font-family: monospace;
             white-space: pre-wrap;
             word-wrap: break-word;
+            overflow: auto;
+            font-size: 16px;
+            color: #333;
         }
 
-        #startButton, #nextButton {
-            background-color: #4CAF50;
+        #timer {
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #e53935;
+        }
+
+        /* Right side for Team names, scores, and buttons */
+        .right-panel {
+            width: 250px;
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .right-panel input[type="text"] {
+            padding: 12px;
+            width: 80%;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .right-panel input[type="text"]:focus {
+            outline: none;
+            border-color: #2196F3;
+        }
+
+        .button {
+            background-color: #2196F3;
             color: white;
-            padding: 10px 20px;
+            padding: 14px 30px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin: 10px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #1e88e5;
+        }
+
+        .scoreboard {
             margin-top: 20px;
+            font-size: 22px;
         }
 
-        #nextButton {
-            background-color: #2196F3;
-        }
-
-        #startButton:disabled, #nextButton:disabled {
-            background-color: #ccc;
-        }
-
-        #nextButton {
-            display: none;
-        }
-
-        #result {
-            margin-top: 20px;
-            font-size: 20px;
+        .scoreboard div {
+            margin: 5px 0;
             font-weight: bold;
+            color: #333;
         }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .team-name {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c6fbb;
+        }
+
+        .container .left-panel, .container .right-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Rust Programming Quiz 1</h2>
-    <div id="timer">Time left: <span id="time">00:00</span></div>
-    <div class="question" id="question">Click "Start" to begin!</div>
-    <div id="questionNumber">Question: 0 of 20</div>
-    <pre><code id="code" class="language-rust"></code></pre>
-    <button id="startButton" onclick="startQuiz()">Start</button>
-    <button id="nextButton" onclick="nextQuestion()">Next</button>
-    <div id="result"></div>
+    <!-- Left Panel for Question and Timer -->
+    <div class="left-panel">
+        <h2>Rust Programming Quiz</h2>
+        
+        <!-- Timer -->
+        <div id="timer">Time left: <span id="time">02:00</span></div>
+
+        <!-- Question Section -->
+        <div class="question" id="question">Click "Start" to begin!</div>
+        <div id="questionNumber">Question: 0 of 20</div>
+
+        <!-- Code Snippet -->
+        <pre><code id="code" class="language-rust"></code></pre>
+
+        <!-- Start Button -->
+        <button id="startButton" class="button" onclick="startQuiz()">Start</button>
+
+        <!-- Next Question Button -->
+        <button id="nextButton" class="button" onclick="nextQuestion()">Next</button>
+    </div>
+
+    <!-- Right Panel for Team names, scores, and buttons -->
+    <div class="right-panel">
+        <!-- Team Name Inputs -->
+        <div class="team-name">
+            <input type="text" id="team1Name" placeholder="Enter Team 1 Name" />
+            <input type="text" id="team2Name" placeholder="Enter Team 2 Name" />
+        </div>
+        
+        <!-- Scoreboard -->
+        <div class="scoreboard">
+            <div id="team1Score">Team 1: 0</div>
+            <div id="team2Score">Team 2: 0</div>
+        </div>
+
+        <!-- Points Buttons -->
+        <div class="buttons-container">
+            <button class="button" onclick="addPoint(1)">Add Point for Team 1</button>
+            <button class="button" onclick="addPoint(2)">Add Point for Team 2</button>
+        </div>
+
+        <!-- Quiz Result -->
+        <div class="result" id="result"></div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-rust.min.js"></script>
 <script>
     let timer;
-    let timeLeft = 300; // 5 minutes timer (300 seconds)
+    let timeLeft = 120; // 2 minutes timer (120 seconds)
     let questionCount = 0; // Track the number of questions answered
+    let team1Score = 0; // Track Team 1 score
+    let team2Score = 0; // Track Team 2 score
     let questions = [
         { question: "What is the output of the following code?", code: `fn main() {\nlet x = 5;\nlet y = 0;\nlet result = x / y;\nprintln!("Result: {}", result);\n}` },
         { question: "What does the following code do?", code: `fn main() {\nlet mut v = vec![1, 2, 3];\nlet element = v[3];\nprintln!("Element: {}", element);\n}` },
@@ -122,57 +232,91 @@
         { question: "What will this code output?", code: `async fn do_something_async() {\nprintln!("Doing something asynchronously...");\n}\n#[tokio::main]\nasync fn main() {\ndo_something_async();\nprintln!("Main thread exiting");\n}` }
     ];
 
-    let questionInterval;
-    let startTime;
-    let endTime;
-    let timeSpent;
-    
     function startQuiz() {
+        let team1Name = document.getElementById("team1Name").value;
+        let team2Name = document.getElementById("team2Name").value;
+        if (!team1Name || !team2Name) {
+            alert("Please enter names for both teams.");
+            return;
+        }
+        
         document.getElementById("startButton").disabled = true;
-        let minutes = Math.floor(timeLeft / 60);
-        let seconds = timeLeft % 60;
-        document.getElementById("time").textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-        timer = setInterval(function() {
-            timeLeft--;
-            minutes = Math.floor(timeLeft / 60);
-            seconds = timeLeft % 60;
-            document.getElementById("time").textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                showResult();
-            }
-        }, 1000);
-
         questionCount = 0;
-        showQuestion();
-        document.getElementById("nextButton").style.display = "block";
-        document.getElementById("startButton").style.display = "none";
+        team1Score = 0;
+        team2Score = 0;
 
+        document.getElementById("team1Score").innerText = `Team 1: ${team1Score}`;
+        document.getElementById("team2Score").innerText = `Team 2: ${team2Score}`;
+
+        startNextQuestion();
     }
 
-    function showQuestion() {
+    function startNextQuestion() {
         if (questionCount < questions.length) {
             let currentQuestion = questions[questionCount];
             document.getElementById("question").innerText = currentQuestion.question;
-            document.getElementById("code").innerHTML = currentQuestion.code; // Remove the <br> part
-            Prism.highlightAll();
+            document.getElementById("code").innerHTML = currentQuestion.code; 
+            Prism.highlightElement(document.getElementById("code"));
             document.getElementById("questionNumber").innerText = `Question: ${questionCount + 1} of 20`;
+
+            // Reset Timer
+            timeLeft = 120; // Reset to 2 minutes for each question
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById("time").textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+
+            // Start Timer
+            timer = setInterval(() => {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                document.getElementById("time").textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer); // Stop the timer
+                    alert("Time's up! No points awarded.");
+                    nextQuestion();
+                }
+            }, 1000);
+
+            document.getElementById("nextButton").style.display = "block"; // Show the next question button
+	    document.getElementById("startButton").style.display = "none"; 
+            document.getElementById("team1Name").disabled = true;
+            document.getElementById("team2Name").disabled = true;
+
+
         }
     }
 
     function nextQuestion() {
         questionCount++;
+        clearInterval(timer); // Stop current timer
         if (questionCount < questions.length) {
-            showQuestion();
+            startNextQuestion();
         } else {
-            clearInterval(timer);
             showResult();
         }
     }
 
+    function addPoint(teamNumber) {
+        if (teamNumber === 1) {
+            team1Score++;
+            document.getElementById("team1Score").innerText = `Team 1: ${team1Score}`;
+        } else if (teamNumber === 2) {
+            team2Score++;
+            document.getElementById("team2Score").innerText = `Team 2: ${team2Score}`;
+        }
+    }
+
     function showResult() {
-        document.getElementById("result").innerText = "Quiz Over!";
-        document.getElementById("nextButton").style.display = "none";
+        let result = '';
+        if (team1Score > team2Score) {
+            result = `Winner: Team 1 with ${team1Score} points!`;
+        } else if (team2Score > team1Score) {
+            result = `Winner: Team 2 with ${team2Score} points!`;
+        } else {
+            result = `It's a tie with ${team1Score} points each!`;
+        }
+        document.getElementById("result").innerText = result;
     }
 </script>
 
