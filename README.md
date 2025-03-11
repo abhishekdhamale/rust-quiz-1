@@ -1,1 +1,1 @@
-# [Rust Quiz 1](https://abhishekdhamale.github.io/rust-quiz/)
+# [Rust Quiz 1](https://abhishekdhamale.github.io/rust-quiz-1/)
