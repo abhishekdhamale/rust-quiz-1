@@ -371,6 +371,7 @@
                     <div class="question-header">
                         <div class="question-counter" id="questionCounter">Question 1/10</div>
                         <div class="timer" id="timer">2:00</div>
+                        <button id="startTimer" onclick="startTimer()">Start Timer</button>
                     </div>
                     <div class="timer-bar">
                         <div class="timer-progress" id="timerProgress"></div>
@@ -589,7 +590,7 @@
             // Load first question
             currentQuestionIndex = 0;
             loadQuestion(0);
-            startTimer();
+            //startTimer();
         });
 
         // Load a question
@@ -710,11 +711,13 @@
             
             timerInterval = setInterval(() => {
                 //timeLeft--;
-                updateTimerDisplay();
+                
 
-                if (timeLeft > 0){
+                if (timeLeft >= 0){
                     timeLeft--;
                 };
+                
+                updateTimerDisplay();
                 
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
@@ -743,8 +746,10 @@
         }
 
         function resetTimer() {
+            timeLeft = 120;
+            updateTimerDisplay();
             clearInterval(timerInterval);
-            startTimer();
+            //startTimer();
         }
 
         function updateTimerDisplay() {
